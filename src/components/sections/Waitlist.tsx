@@ -17,22 +17,41 @@ export const Waitlist = () => {
     setIsLoading(true);
     
     try {
-      // In a real app, you would make an API call here
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const formData = new FormData();
+
+      formData.append('entry.2084418735', name);
+      formData.append('entry.740890155', email);
+      formData.append('entry.1269087013', companyName);
+      formData.append('entry.635970032', companyUrl);
+      formData.append('fvv', '1');
+      formData.append('pageHistory', '0');
+      formData.append('fbzx', Date.now().toString());
+      formData.append('dlut', Date.now().toString());
+
+      const response = await fetch(
+        'https://docs.google.com/forms/d/e/1FAIpQLSeb6FjJ6qpOsaVTp3xkwQO925e1edIrovZSubtpGE7rV0WZIg/formResponse',
+        { method: 'POST', body: formData, mode: 'no-cors' }
+      );
+
+      if(response) {
+        toast({
+          title: 'Success!',
+          description: 'You\'ve been added to our waitlist. We\'ll be in touch soon!',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        
+        setEmail('');
+        setName('');
+        setCompanyName('');
+        setCompanyUrl('');
+      } else {
+        throw new Error('Form submission failed');
+      }
       
-      toast({
-        title: 'Success!',
-        description: 'You\'ve been added to our waitlist. We\'ll be in touch soon!',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      
-      setEmail('');
-      setName('');
-      setCompanyName('');
-      setCompanyUrl('');
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: 'Error',
         description: 'Something went wrong. Please try again.',
