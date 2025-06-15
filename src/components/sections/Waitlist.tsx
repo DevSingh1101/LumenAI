@@ -15,25 +15,27 @@ export const Waitlist = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
-      const formData = new FormData();
 
-      formData.append('entry.2084418735', name);
-      formData.append('entry.740890155', email);
-      formData.append('entry.1269087013', companyName);
-      formData.append('entry.635970032', companyUrl);
-      formData.append('fvv', '1');
-      formData.append('pageHistory', '0');
-      formData.append('fbzx', Date.now().toString());
-      formData.append('dlut', Date.now().toString());
+      const url = "https://script.google.com/macros/s/AKfycbzNSeewfeA2Z-Atl5pKbCDZYMELrSVtwkZ6kpNZYKZEfLsty5Z5ekOLxmBsA1F-oAUi/exec"
+      const data = {
+        "Timestamp": (new Date()).toUTCString(),
+        "name": name,
+        "companyName": companyName,
+        "companyWebsite": companyUrl,
+        "email": email
+      };
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        mode: 'no-cors'
+      })
 
-      const response = await fetch(
-        'https://docs.google.com/forms/d/e/1FAIpQLSeb6FjJ6qpOsaVTp3xkwQO925e1edIrovZSubtpGE7rV0WZIg/formResponse',
-        { method: 'POST', body: formData, mode: 'no-cors' }
-      );
-
-      if(response) {
+      if (response) {
         toast({
           title: 'Success!',
           description: 'You\'ve been added to our waitlist. We\'ll be in touch soon!',
@@ -41,7 +43,7 @@ export const Waitlist = () => {
           duration: 5000,
           isClosable: true,
         });
-        
+
         setEmail('');
         setName('');
         setCompanyName('');
@@ -49,7 +51,7 @@ export const Waitlist = () => {
       } else {
         throw new Error('Form submission failed');
       }
-      
+
     } catch (error) {
       console.error('Form submission error:', error);
       toast({
@@ -104,7 +106,7 @@ export const Waitlist = () => {
             opacity={0.05}
             rounded="full"
           />
-          
+
           <Flex direction={{ base: 'column', lg: 'row' }} align="center" position="relative" zIndex={1}>
             <Box flex={1} color="white" mb={{ base: 10, lg: 0 }} pr={{ lg: 12 }}>
               <Text
@@ -121,16 +123,16 @@ export const Waitlist = () => {
               >
                 Start Boosting Sales
               </Text>
-              
+
               <Heading as="h2" size="2xl" mb={6} lineHeight="1.2">
                 Unlock Revenue Growth with <Box as="span" color="white">LumenAI</Box>
               </Heading>
-              
+
               <Text fontSize="lg" mb={8} opacity={0.9}>
-                Get early access to the AI that turns browsers into buyers and keeps customers smiling. 
+                Get early access to the AI that turns browsers into buyers and keeps customers smiling.
                 Limited spots available!
               </Text>
-              
+
               <Box>
                 <Flex align="center" mb={4}>
                   <Box w={2} h={2} bg="white" rounded="full" mr={3} />
@@ -146,7 +148,7 @@ export const Waitlist = () => {
                 </Flex>
               </Box>
             </Box>
-            
+
             <Box flex={{ base: '1', md: '0.8', lg: '0.8' }} w="full" maxW="lg">
               <MotionBox
                 bg="white"
@@ -161,7 +163,7 @@ export const Waitlist = () => {
                 <Text fontSize="xl" fontWeight="bold" mb={6} color="gray.800" textAlign="center">
                   Start Boosting Sales
                 </Text>
-                
+
                 <form onSubmit={handleSubmit}>
                   <VStack spacing={5}>
                     <FormControl isRequired>
@@ -181,7 +183,7 @@ export const Waitlist = () => {
                     <FormControl isRequired>
                       <FormLabel color="gray.700">Company Website</FormLabel>
                       <Input
-                        type="url"
+                        type="text"
                         value={companyUrl}
                         onChange={(e) => setCompanyUrl(e.target.value)}
                         placeholder="https://acme.com"
@@ -206,7 +208,7 @@ export const Waitlist = () => {
                         size="lg"
                       />
                     </FormControl>
-                    
+
                     <FormControl isRequired>
                       <FormLabel color="gray.700">Work Email</FormLabel>
                       <Input
@@ -221,7 +223,7 @@ export const Waitlist = () => {
                         size="lg"
                       />
                     </FormControl>
-                    
+
                     <Button
                       type="submit"
                       colorScheme="brand"
@@ -233,7 +235,7 @@ export const Waitlist = () => {
                     >
                       Start Boosting Sales
                     </Button>
-                    
+
                     <Text fontSize="sm" color="gray.500" textAlign="center" mt={2}>
                       We respect your privacy. Unsubscribe at any time.
                     </Text>
