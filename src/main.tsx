@@ -5,7 +5,6 @@ import App from './App';
 import { theme } from './config/theme';
 import './index.css';
 
-// Add Inter font
 const link = document.createElement('link');
 link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
 link.rel = 'stylesheet';

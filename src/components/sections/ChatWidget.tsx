@@ -295,9 +295,9 @@ export const ChatWidget = () => {
           bg="white"
           color="black"
           _dark={{
-            bg: "white",
-            color: "black",
-            _placeholder: { color: "gray.500" },
+            bg: "transparent",
+            color: "white",
+            _placeholder: { color: "white" },
           }}
           _placeholder={{
             color: "gray.400",
