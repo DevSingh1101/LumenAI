@@ -23,39 +23,52 @@ export const Waitlist = () => {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
-  const handleWaitlistSubmission = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await submitWaitlistForm({
-        Timestamp: (new Date()).toUTCString(),
-        name,
-        companyName,
-        companyWebsite,
-        email,
-      });
 
-      if (response.ok) {
+      const url = "https://script.google.com/macros/s/AKfycbzNSeewfeA2Z-Atl5pKbCDZYMELrSVtwkZ6kpNZYKZEfLsty5Z5ekOLxmBsA1F-oAUi/exec"
+      const data = {
+        "Timestamp": (new Date()).toUTCString(),
+        "name": name,
+        "companyName": companyName,
+        "companyWebsite": companyWebsite,
+        "email": email
+      };
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        mode: 'no-cors'
+      })
+
+      if (response) {
         toast({
-          title: "Success!",
-          description:
-            "You've been added to our waitlist. We'll be in touch soon!",
-          status: "success",
+          title: 'Success!',
+          description: 'You\'ve been added to our waitlist. We\'ll be in touch soon!',
+          status: 'success',
           duration: 5000,
           isClosable: true,
         });
 
-        resetForm();
+        setEmail('');
+        setName('');
+        setCompanyName('');
+        setCompanyWebsite('');
       } else {
-        throw new Error("Form submission failed");
+        throw new Error('Form submission failed');
       }
+
     } catch (error) {
-      console.error("Form submission error:", error);
+      console.error('Form submission error:', error);
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        status: "error",
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
@@ -210,7 +223,7 @@ export const Waitlist = () => {
                   Start Boosting Sales
                 </Text>
 
-                <form onSubmit={handleWaitlistSubmission}>
+                <form onSubmit={handleSubmit}>
                   <VStack spacing={5}>
                     <CommonInput
                       label="Company Name"
