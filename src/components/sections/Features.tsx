@@ -50,7 +50,7 @@ export const Features = () => {
   const iconColor = useColorModeValue('brand.500', 'brand.300');
 
   return (
-    <Box as="section" py={20} id="features">
+    <Box as="section" py={10} id="features">
       <Container maxW="7xl" px={4}>
         <VStack spacing={3} textAlign="center" mb={16}>
           <motion.div

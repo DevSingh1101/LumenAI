@@ -18,7 +18,7 @@ const MotionBox = motion(Box);
 export const Waitlist = () => {
   const [email, setEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const [companyUrl, setCompanyUrl] = useState("");
+  const [companyWebsite, setCompanyWebsite] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
@@ -29,9 +29,10 @@ export const Waitlist = () => {
 
     try {
       const response = await submitWaitlistForm({
+        Timestamp: (new Date()).toUTCString(),
         name,
         companyName,
-        companyUrl,
+        companyWebsite,
         email,
       });
 
@@ -82,13 +83,14 @@ export const Waitlist = () => {
     setEmail("");
     setName("");
     setCompanyName("");
-    setCompanyUrl("");
+    setCompanyWebsite("");
   };
 
   type WaitlistFormData = {
+    Timestamp: string;
     name: string;
     companyName: string;
-    companyUrl: string;
+    companyWebsite: string;
     email: string;
   };
 
@@ -111,7 +113,6 @@ export const Waitlist = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* Decorative elements */}
           <Box
             position="absolute"
             top={-20}
@@ -219,8 +220,8 @@ export const Waitlist = () => {
                     />
                     <CommonInput
                       label="Company Website"
-                      value={companyUrl}
-                      onChange={(e) => setCompanyUrl(e.target.value)}
+                      value={companyWebsite}
+                      onChange={(e) => setCompanyWebsite(e.target.value)}
                       placeholder="https://acme.com"
                     />
                     <CommonInput

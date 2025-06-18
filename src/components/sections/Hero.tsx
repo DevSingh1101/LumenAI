@@ -91,8 +91,8 @@ export const Hero = () => {
 
           <MotionBox
             position="relative"
-            height="700px"
-            width="500px"
+            height="80vh"
+            width="600px"
             maxWidth="90vw"
             border="1px solid"
             borderColor="gray.200"

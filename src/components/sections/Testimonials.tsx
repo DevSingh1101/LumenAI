@@ -41,7 +41,7 @@ export const Testimonials = () => {
   return (
     <Box
       as="section"
-      py={20}
+      py={10}
       bg={useColorModeValue("gray.50", "gray.900")}
       id="testimonials"
     >
